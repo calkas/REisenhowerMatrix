@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>REisenhowerMatrixMainWindow</class>
+ <widget class="QMainWindow" name="REisenhowerMatrixMainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1008</width>
+    <height>838</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>REisenhowerMatrix</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QGroupBox" name="mainGroupBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>151</width>
+      <height>761</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Main</string>
+    </property>
+    <widget class="QPushButton" name="saveButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>110</y>
+       <width>80</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Save</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="openButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>80</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Open</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="emDoGroupBox">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>10</y>
+      <width>371</width>
+      <height>371</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Do First</string>
+    </property>
+    <widget class="QListWidget" name="emDoListWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>351</width>
+       <height>251</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="emDoLineEdit">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>131</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="placeholderText">
+      <string>Add Task</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="emDoTotalTasksLabel">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>40</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Total Tasks</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="emDoClearAllButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>330</y>
+       <width>80</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Clear All</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="emDoPendingTasksLabel">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>40</y>
+       <width>111</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pending Tasks</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="emDelegateGroupBox">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>400</y>
+      <width>371</width>
+      <height>371</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Delegate</string>
+    </property>
+    <widget class="QListWidget" name="emDelegateListWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>351</width>
+       <height>251</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="emDelegateLineEdit">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>131</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="placeholderText">
+      <string>Add Task</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="emDelegateTotalTasksLabel">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>40</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Total Tasks</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="emDelegateClearAllButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>330</y>
+       <width>80</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Clear All</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="emDelegatePendingTasksLabel">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>40</y>
+       <width>121</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pending Tasks</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="emScheduleGroupBox">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>10</y>
+      <width>371</width>
+      <height>371</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Schedule</string>
+    </property>
+    <widget class="QListWidget" name="emScheduleListWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>351</width>
+       <height>251</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="emScheduleLineEdit">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>131</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="placeholderText">
+      <string>Add Task</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="emScheduleTotalTasksLabel">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>40</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Total Tasks</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="emScheduleClearAllButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>330</y>
+       <width>80</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Clear All</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="emSchedulePendingTasksLabel">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>40</y>
+       <width>111</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pending Tasks</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="emEliminateGroupBox">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>400</y>
+      <width>361</width>
+      <height>371</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Eliminate</string>
+    </property>
+    <widget class="QListWidget" name="emEliminateListWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>341</width>
+       <height>251</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="emEliminateLineEdit">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>131</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="placeholderText">
+      <string>Add Task</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="emEliminateTotalTasksLabel">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>40</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Total Tasks</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="emEliminateClearAllButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>330</y>
+       <width>80</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Clear All</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="emEliminatePendingTasksLabel">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>40</y>
+       <width>111</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pending Tasks</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1008</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
