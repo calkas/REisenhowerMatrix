@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1008</width>
+    <width>956</width>
     <height>838</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>151</width>
+      <width>171</width>
       <height>761</height>
      </rect>
     </property>
@@ -30,26 +30,46 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>110</y>
-       <width>80</width>
-       <height>25</height>
+       <y>120</y>
+       <width>151</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="text">
       <string>Save</string>
      </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/eMatrix/Resources/saveIcon.png</normaloff>:/eMatrix/Resources/saveIcon.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>25</width>
+       <height>25</height>
+      </size>
+     </property>
     </widget>
-    <widget class="QPushButton" name="openButton">
+    <widget class="QPushButton" name="loadButton">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>50</y>
-       <width>80</width>
-       <height>25</height>
+       <width>151</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="text">
-      <string>Open</string>
+      <string>Load</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/eMatrix/Resources/openFile.png</normaloff>:/eMatrix/Resources/openFile.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>25</width>
+       <height>25</height>
+      </size>
      </property>
     </widget>
    </widget>
@@ -91,14 +111,14 @@
     <widget class="QLabel" name="emDoTotalTasksLabel">
      <property name="geometry">
       <rect>
-       <x>150</x>
+       <x>270</x>
        <y>40</y>
        <width>91</width>
        <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>Total Tasks</string>
+      <string>Total Tasks 0</string>
      </property>
     </widget>
     <widget class="QPushButton" name="emDoClearAllButton">
@@ -114,17 +134,21 @@
       <string>Clear All</string>
      </property>
     </widget>
-    <widget class="QLabel" name="emDoPendingTasksLabel">
+    <widget class="QPushButton" name="emDoClearSelectedButton">
      <property name="geometry">
       <rect>
-       <x>250</x>
-       <y>40</y>
-       <width>111</width>
-       <height>21</height>
+       <x>230</x>
+       <y>330</y>
+       <width>131</width>
+       <height>25</height>
       </rect>
      </property>
      <property name="text">
-      <string>Pending Tasks</string>
+      <string>Clear Selected</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/eMatrix/Resources/removeIcon.png</normaloff>:/eMatrix/Resources/removeIcon.png</iconset>
      </property>
     </widget>
    </widget>
@@ -166,14 +190,14 @@
     <widget class="QLabel" name="emDelegateTotalTasksLabel">
      <property name="geometry">
       <rect>
-       <x>150</x>
+       <x>270</x>
        <y>40</y>
-       <width>81</width>
+       <width>91</width>
        <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>Total Tasks</string>
+      <string>Total Tasks 0</string>
      </property>
     </widget>
     <widget class="QPushButton" name="emDelegateClearAllButton">
@@ -189,17 +213,21 @@
       <string>Clear All</string>
      </property>
     </widget>
-    <widget class="QLabel" name="emDelegatePendingTasksLabel">
+    <widget class="QPushButton" name="emDelegateClearSelectedButton">
      <property name="geometry">
       <rect>
-       <x>240</x>
-       <y>40</y>
-       <width>121</width>
-       <height>21</height>
+       <x>230</x>
+       <y>330</y>
+       <width>131</width>
+       <height>25</height>
       </rect>
      </property>
      <property name="text">
-      <string>Pending Tasks</string>
+      <string>Clear Selected</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/eMatrix/Resources/removeIcon.png</normaloff>:/eMatrix/Resources/removeIcon.png</iconset>
      </property>
     </widget>
    </widget>
@@ -241,14 +269,14 @@
     <widget class="QLabel" name="emScheduleTotalTasksLabel">
      <property name="geometry">
       <rect>
-       <x>150</x>
+       <x>270</x>
        <y>40</y>
        <width>91</width>
        <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>Total Tasks</string>
+      <string>Total Tasks 0</string>
      </property>
     </widget>
     <widget class="QPushButton" name="emScheduleClearAllButton">
@@ -264,17 +292,21 @@
       <string>Clear All</string>
      </property>
     </widget>
-    <widget class="QLabel" name="emSchedulePendingTasksLabel">
+    <widget class="QPushButton" name="emScheduleClearSelectedButton">
      <property name="geometry">
       <rect>
-       <x>250</x>
-       <y>40</y>
-       <width>111</width>
-       <height>21</height>
+       <x>230</x>
+       <y>330</y>
+       <width>131</width>
+       <height>25</height>
       </rect>
      </property>
      <property name="text">
-      <string>Pending Tasks</string>
+      <string>Clear Selected</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/eMatrix/Resources/removeIcon.png</normaloff>:/eMatrix/Resources/removeIcon.png</iconset>
      </property>
     </widget>
    </widget>
@@ -316,14 +348,14 @@
     <widget class="QLabel" name="emEliminateTotalTasksLabel">
      <property name="geometry">
       <rect>
-       <x>150</x>
+       <x>260</x>
        <y>40</y>
-       <width>81</width>
+       <width>91</width>
        <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>Total Tasks</string>
+      <string>Total Tasks 0</string>
      </property>
     </widget>
     <widget class="QPushButton" name="emEliminateClearAllButton">
@@ -339,17 +371,21 @@
       <string>Clear All</string>
      </property>
     </widget>
-    <widget class="QLabel" name="emEliminatePendingTasksLabel">
+    <widget class="QPushButton" name="emEliminateClearSelectedButton">
      <property name="geometry">
       <rect>
-       <x>240</x>
-       <y>40</y>
-       <width>111</width>
-       <height>21</height>
+       <x>220</x>
+       <y>330</y>
+       <width>131</width>
+       <height>25</height>
       </rect>
      </property>
      <property name="text">
-      <string>Pending Tasks</string>
+      <string>Clear Selected</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/eMatrix/Resources/removeIcon.png</normaloff>:/eMatrix/Resources/removeIcon.png</iconset>
      </property>
     </widget>
    </widget>
@@ -359,13 +395,15 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1008</width>
+     <width>956</width>
      <height>25</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

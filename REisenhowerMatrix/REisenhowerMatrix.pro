@@ -17,10 +17,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    reisenhowermatrixmainwindow.cpp
+    reisenhowermatrixmainwindow.cpp \
+    xmlematrixreader.cpp
 
 HEADERS += \
-    reisenhowermatrixmainwindow.h
+    reisenhowermatrixmainwindow.h \
+    xmlematrixreader.h
 
 FORMS += \
     reisenhowermatrixmainwindow.ui
@@ -32,3 +34,6 @@ TRANSLATIONS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resources.qrc

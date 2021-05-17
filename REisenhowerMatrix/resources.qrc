@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/eMatrix">
+        <file>Resources/openFile.png</file>
+        <file>Resources/saveIcon.png</file>
+        <file>Resources/removeIcon.png</file>
+    </qresource>
+</RCC>
