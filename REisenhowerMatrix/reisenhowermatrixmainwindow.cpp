@@ -12,27 +12,28 @@
 #include <QMessageBox>
 #include <QTextStream>
 #include "xmlematrixreader.h"
+#include "tasktoxmlbuilder.h"
 
 REisenhowerMatrixMainWindow::REisenhowerMatrixMainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::REisenhowerMatrixMainWindow)
+    , m_pUI(new Ui::REisenhowerMatrixMainWindow)
 {
-    ui->setupUi(this);
+    m_pUI->setupUi(this);
     configurationEmDoGroup();
     configurationEmScheduleGroup();
     configurationEmDelegateGroup();
     configurationEmEliminateGroup();
     configurationMenuGroup();
 
-    ui->statusbar->showMessage("Ready");
+    m_pUI->statusbar->showMessage("Ready");
 }
 
 REisenhowerMatrixMainWindow::~REisenhowerMatrixMainWindow()
 {
-    delete ui;
+    delete m_pUI;
 }
 
-void REisenhowerMatrixMainWindow::highlightAndStrokeItemChecked(QListWidgetItem *pListWidgetItem)
+void REisenhowerMatrixMainWindow::changeTaskStatus(QListWidgetItem *pListWidgetItem)
 {
     QFont itemFont = pListWidgetItem->font();
     bool isFontStrikeOut = false;
@@ -51,6 +52,7 @@ void REisenhowerMatrixMainWindow::highlightAndStrokeItemChecked(QListWidgetItem 
 
 void REisenhowerMatrixMainWindow::addTaskItemToListWidget()
 {
+    m_pUI->statusbar->showMessage("Ready");
     QLineEdit* pQLineEdit = qobject_cast<QLineEdit*>(sender());
     if(pQLineEdit == nullptr)
     {
@@ -63,53 +65,58 @@ void REisenhowerMatrixMainWindow::addTaskItemToListWidget()
         return;
     }
 
-    if(pQLineEdit == ui->emDoLineEdit)
+    if(pQLineEdit == m_pUI->emDoLineEdit)
     {
-        ui->emDoListWidget->addItem(createListWidgetItem(ui->emDoListWidget, itemName));
-        updateTotalTaskCounter(ui->emDoTotalTasksLabel, ui->emDoListWidget->model()->rowCount());
+        m_pUI->emDoListWidget->addItem(createListWidgetItem(m_pUI->emDoListWidget, itemName));
+        updateTotalTaskCounter(m_pUI->emDoTotalTasksLabel, m_pUI->emDoListWidget->model()->rowCount());
     }
-    else if(pQLineEdit == ui->emDelegateLineEdit)
+    else if(pQLineEdit == m_pUI->emDelegateLineEdit)
     {
-        ui->emDelegateListWidget->addItem(createListWidgetItem(ui->emDelegateListWidget, itemName));
-        updateTotalTaskCounter(ui->emDelegateTotalTasksLabel, ui->emDelegateListWidget->model()->rowCount());
+        m_pUI->emDelegateListWidget->addItem(createListWidgetItem(m_pUI->emDelegateListWidget, itemName));
+        updateTotalTaskCounter(m_pUI->emDelegateTotalTasksLabel, m_pUI->emDelegateListWidget->model()->rowCount());
 
     }
-    else if(pQLineEdit == ui->emScheduleLineEdit)
+    else if(pQLineEdit == m_pUI->emScheduleLineEdit)
     {
-        ui->emScheduleListWidget->addItem(createListWidgetItem(ui->emScheduleListWidget, itemName));
-        updateTotalTaskCounter(ui->emScheduleTotalTasksLabel, ui->emScheduleListWidget->model()->rowCount());
+        m_pUI->emScheduleListWidget->addItem(createListWidgetItem(m_pUI->emScheduleListWidget, itemName));
+        updateTotalTaskCounter(m_pUI->emScheduleTotalTasksLabel, m_pUI->emScheduleListWidget->model()->rowCount());
     }
-    else if(pQLineEdit == ui->emEliminateLineEdit)
+    else if(pQLineEdit == m_pUI->emEliminateLineEdit)
     {
-        ui->emEliminateListWidget->addItem(createListWidgetItem(ui->emEliminateListWidget, itemName));
-        updateTotalTaskCounter(ui->emEliminateTotalTasksLabel, ui->emEliminateListWidget->model()->rowCount());
+        m_pUI->emEliminateListWidget->addItem(createListWidgetItem(m_pUI->emEliminateListWidget, itemName));
+        updateTotalTaskCounter(m_pUI->emEliminateTotalTasksLabel, m_pUI->emEliminateListWidget->model()->rowCount());
     }
+    else
+    {
+        //Nothing
+    }
+
     pQLineEdit->clear();
     pQLineEdit->setPlaceholderText(m_lineEditDefaultName);
 }
 
-void REisenhowerMatrixMainWindow::clearAllItems()
+void REisenhowerMatrixMainWindow::clearAllTasks()
 {
     QPushButton* pButton = qobject_cast<QPushButton*>(sender());
-    if(pButton == ui->emDoClearAllButton)
+    if(pButton == m_pUI->emDoClearAllButton)
     {
-        ui->emDoListWidget->clear();
-        updateTotalTaskCounter(ui->emDoTotalTasksLabel, 0);
+        m_pUI->emDoListWidget->clear();
+        updateTotalTaskCounter(m_pUI->emDoTotalTasksLabel, 0);
     }
-    else if(pButton == ui->emDelegateClearAllButton)
+    else if(pButton == m_pUI->emDelegateClearAllButton)
     {
-        ui->emDelegateListWidget->clear();
-        updateTotalTaskCounter(ui->emDelegateTotalTasksLabel, 0);
+        m_pUI->emDelegateListWidget->clear();
+        updateTotalTaskCounter(m_pUI->emDelegateTotalTasksLabel, 0);
     }
-    else if(pButton == ui->emScheduleClearAllButton)
+    else if(pButton == m_pUI->emScheduleClearAllButton)
     {
-        ui->emScheduleListWidget->clear();
-        updateTotalTaskCounter(ui->emScheduleTotalTasksLabel, 0);
+        m_pUI->emScheduleListWidget->clear();
+        updateTotalTaskCounter(m_pUI->emScheduleTotalTasksLabel, 0);
     }
-    else if(pButton == ui->emEliminateClearAllButton)
+    else if(pButton == m_pUI->emEliminateClearAllButton)
     {
-        ui->emEliminateListWidget->clear();
-        updateTotalTaskCounter(ui->emEliminateTotalTasksLabel, 0);
+        m_pUI->emEliminateListWidget->clear();
+        updateTotalTaskCounter(m_pUI->emEliminateTotalTasksLabel, 0);
     }
     else
     {
@@ -117,86 +124,89 @@ void REisenhowerMatrixMainWindow::clearAllItems()
     }
 }
 
-void REisenhowerMatrixMainWindow::clearSelectedItem()
+void REisenhowerMatrixMainWindow::clearSelectedTask()
 {
     QPushButton* pButton = qobject_cast<QPushButton*>(sender());
 
-    if(pButton == ui->emDoClearSelectedButton)
+    if(pButton == m_pUI->emDoClearSelectedButton)
     {
-        ui->emDoListWidget->model()->removeRow(ui->emDoListWidget->currentIndex().row());
-        updateTotalTaskCounter(ui->emDoTotalTasksLabel, ui->emDoListWidget->model()->rowCount());
+        m_pUI->emDoListWidget->model()->removeRow(m_pUI->emDoListWidget->currentIndex().row());
+        updateTotalTaskCounter(m_pUI->emDoTotalTasksLabel, m_pUI->emDoListWidget->model()->rowCount());
     }
-    else if(pButton == ui->emDelegateClearSelectedButton)
+    else if(pButton == m_pUI->emDelegateClearSelectedButton)
     {
-        ui->emDelegateListWidget->model()->removeRow(ui->emDelegateListWidget->currentIndex().row());
-        updateTotalTaskCounter(ui->emDelegateTotalTasksLabel, ui->emDelegateListWidget->model()->rowCount());
+        m_pUI->emDelegateListWidget->model()->removeRow(m_pUI->emDelegateListWidget->currentIndex().row());
+        updateTotalTaskCounter(m_pUI->emDelegateTotalTasksLabel, m_pUI->emDelegateListWidget->model()->rowCount());
     }
-    else if(pButton == ui->emScheduleClearSelectedButton)
+    else if(pButton == m_pUI->emScheduleClearSelectedButton)
     {
-        ui->emScheduleListWidget->model()->removeRow(ui->emScheduleListWidget->currentIndex().row());
-        updateTotalTaskCounter(ui->emScheduleTotalTasksLabel, ui->emScheduleListWidget->model()->rowCount());
+        m_pUI->emScheduleListWidget->model()->removeRow(m_pUI->emScheduleListWidget->currentIndex().row());
+        updateTotalTaskCounter(m_pUI->emScheduleTotalTasksLabel, m_pUI->emScheduleListWidget->model()->rowCount());
     }
 
-    else if(pButton == ui->emEliminateClearSelectedButton)
+    else if(pButton == m_pUI->emEliminateClearSelectedButton)
     {
-        ui->emEliminateListWidget->model()->removeRow(ui->emEliminateListWidget->currentIndex().row());
-        updateTotalTaskCounter(ui->emEliminateTotalTasksLabel, ui->emEliminateListWidget->model()->rowCount());
+        m_pUI->emEliminateListWidget->model()->removeRow(m_pUI->emEliminateListWidget->currentIndex().row());
+        updateTotalTaskCounter(m_pUI->emEliminateTotalTasksLabel, m_pUI->emEliminateListWidget->model()->rowCount());
     }
     else
     {
         //Nothing
     }
-
 }
 
 void REisenhowerMatrixMainWindow::loadFromFile()
 {
-    m_xmlFilePath = QFileDialog::getOpenFileName(this, tr("Open xml File"), "c:/", tr("xml file (*.xml)"));
-    if(m_xmlFilePath.isEmpty())
+    QString xmlFilePath = QFileDialog::getOpenFileName(this,
+                                                       tr("Open xml File"),
+                                                       "c:/",
+                                                       tr("xml file (*.xml)"));
+    if(xmlFilePath.isEmpty())
     {
-        ui->statusbar->showMessage("The file path is empty");
+        m_pUI->statusbar->showMessage("The file path is empty");
         return;
     }
-    QFile xmlFile(m_xmlFilePath);
+    QFile xmlFile(xmlFilePath);
     if(!xmlFile.open(QFile::ReadOnly | QFile::Text))
     {
-        QMessageBox::information(this, tr("Unable to open file"),
-            xmlFile.errorString());
-        ui->statusbar->showMessage("Cannot read file");
+        QMessageBox::information(this,
+                                 tr("Unable to open file"),
+                                 xmlFile.errorString());
+        m_pUI->statusbar->showMessage("Cannot read the file");
         return;
     }
-
-    ui->statusbar->showMessage("Open File: " + m_xmlFilePath);
 
     XmlEMatrixReader reader(xmlFile);
     reader.Read();
-    bool isSuccess = reader.FillList(*ui->emDoListWidget, "DoListMatrix");
-    isSuccess &= reader.FillList(*ui->emScheduleListWidget, "ScheduleListMatrix");
-    isSuccess &= reader.FillList(*ui->emDelegateListWidget, "DelegateListMatrix");
-    isSuccess &= reader.FillList(*ui->emEliminateListWidget, "EliminateListMatrix");
+    bool isSuccess = reader.FillList(*m_pUI->emDoListWidget, "DoListMatrix");
+    isSuccess &= reader.FillList(*m_pUI->emScheduleListWidget, "ScheduleListMatrix");
+    isSuccess &= reader.FillList(*m_pUI->emDelegateListWidget, "DelegateListMatrix");
+    isSuccess &= reader.FillList(*m_pUI->emEliminateListWidget, "EliminateListMatrix");
 
-    if(isSuccess)
+    m_pUI->statusbar->showMessage("File: " + xmlFilePath + " - Loaded");
+
+    if(!isSuccess)
     {
-        ui->statusbar->showMessage("Done");
+        m_pUI->statusbar->showMessage("Error - Cannot parse the file");
     }
-    else
-    {
-        ui->statusbar->showMessage("Error");
-    }
-    updateTotalTaskCounter(ui->emDoTotalTasksLabel, ui->emDoListWidget->model()->rowCount());
-    updateTotalTaskCounter(ui->emDelegateTotalTasksLabel, ui->emDelegateListWidget->model()->rowCount());
-    updateTotalTaskCounter(ui->emScheduleTotalTasksLabel, ui->emScheduleListWidget->model()->rowCount());
-    updateTotalTaskCounter(ui->emEliminateTotalTasksLabel, ui->emEliminateListWidget->model()->rowCount());
+
+    updateTotalTaskCounter(m_pUI->emDoTotalTasksLabel,        m_pUI->emDoListWidget->model()->rowCount());
+    updateTotalTaskCounter(m_pUI->emDelegateTotalTasksLabel,  m_pUI->emDelegateListWidget->model()->rowCount());
+    updateTotalTaskCounter(m_pUI->emScheduleTotalTasksLabel,  m_pUI->emScheduleListWidget->model()->rowCount());
+    updateTotalTaskCounter(m_pUI->emEliminateTotalTasksLabel, m_pUI->emEliminateListWidget->model()->rowCount());
     xmlFile.close();
 }
 
 void REisenhowerMatrixMainWindow::saveToFile()
 {
-    QString savefileNamePath = QFileDialog::getSaveFileName(this, tr("Save Eisenhower Matrix to xml file"),"c:/", tr("xml file (*.xml)"));
+    QString savefileNamePath = QFileDialog::getSaveFileName(this,
+                                                            tr("Save Eisenhower Matrix to xml file"),
+                                                            "c:/",
+                                                            tr("xml file (*.xml)"));
 
     if(savefileNamePath.isEmpty())
     {
-        ui->statusbar->showMessage("Something wrong with path to save");
+        m_pUI->statusbar->showMessage("Something wrong with path to save");
         return;
     }
 
@@ -204,106 +214,66 @@ void REisenhowerMatrixMainWindow::saveToFile()
     if (!file.open(QIODevice::WriteOnly)) {
         QMessageBox::information(this, tr("Unable to open file"),
             file.errorString());
-        ui->statusbar->showMessage("Cannot read file");
+        m_pUI->statusbar->showMessage("Cannot read file");
         return;
     }
 
     QTextStream out(&file);
-    out << createXmlStr();
+    TaskToXmlBuilder xmlBuilder;
 
-    ui->statusbar->showMessage("Saved!");
+    out << xmlBuilder.addXmlHeader()
+                     .addTaskListToXml("DoListMatrix",        *m_pUI->emDoListWidget)
+                     .addTaskListToXml("ScheduleListMatrix",  *m_pUI->emScheduleListWidget)
+                     .addTaskListToXml("DelegateListMatrix",  *m_pUI->emDelegateListWidget)
+                     .addTaskListToXml("EliminateListMatrix", *m_pUI->emEliminateListWidget)
+                     .addXmlFootage()
+                     .buildXml();
+
+    m_pUI->statusbar->showMessage("File: " + savefileNamePath + " - Saved");
 
     file.close();
 }
 
 void REisenhowerMatrixMainWindow::configurationEmDoGroup()
 {
-    listWidgetConfiguration(ui->emDoListWidget);
-    connect(ui->emDoLineEdit,            SIGNAL(returnPressed()),               this, SLOT(addTaskItemToListWidget()));
-    connect(ui->emDoListWidget,          SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(highlightAndStrokeItemChecked(QListWidgetItem*)));
-    connect(ui->emDoClearAllButton,      SIGNAL(clicked()),                     this, SLOT(clearAllItems()));
-    connect(ui->emDoClearSelectedButton, SIGNAL(clicked()),                     this, SLOT(clearSelectedItem()));
+    listWidgetConfiguration(m_pUI->emDoListWidget);
+    connect(m_pUI->emDoLineEdit,                  SIGNAL(returnPressed()),               this, SLOT(addTaskItemToListWidget()));
+    connect(m_pUI->emDoListWidget,                SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(changeTaskStatus(QListWidgetItem*)));
+    connect(m_pUI->emDoClearAllButton,            SIGNAL(clicked()),                     this, SLOT(clearAllTasks()));
+    connect(m_pUI->emDoClearSelectedButton,       SIGNAL(clicked()),                     this, SLOT(clearSelectedTask()));
 }
 
 void REisenhowerMatrixMainWindow::configurationEmScheduleGroup()
 {
-    listWidgetConfiguration(ui->emScheduleListWidget);
-    connect(ui->emScheduleLineEdit,            SIGNAL(returnPressed()),               this, SLOT(addTaskItemToListWidget()));
-    connect(ui->emScheduleListWidget,          SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(highlightAndStrokeItemChecked(QListWidgetItem*)));
-    connect(ui->emScheduleClearAllButton,      SIGNAL(clicked()),                     this, SLOT(clearAllItems()));
-    connect(ui->emScheduleClearSelectedButton, SIGNAL(clicked()),                     this, SLOT(clearSelectedItem()));
+    listWidgetConfiguration(m_pUI->emScheduleListWidget);
+    connect(m_pUI->emScheduleLineEdit,            SIGNAL(returnPressed()),               this, SLOT(addTaskItemToListWidget()));
+    connect(m_pUI->emScheduleListWidget,          SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(changeTaskStatus(QListWidgetItem*)));
+    connect(m_pUI->emScheduleClearAllButton,      SIGNAL(clicked()),                     this, SLOT(clearAllTasks()));
+    connect(m_pUI->emScheduleClearSelectedButton, SIGNAL(clicked()),                     this, SLOT(clearSelectedTask()));
 }
 
 void REisenhowerMatrixMainWindow::configurationEmDelegateGroup()
 {
-    listWidgetConfiguration(ui->emDelegateListWidget);
-    connect(ui->emDelegateLineEdit,            SIGNAL(returnPressed()),               this, SLOT(addTaskItemToListWidget()));
-    connect(ui->emDelegateListWidget,          SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(highlightAndStrokeItemChecked(QListWidgetItem*)));
-    connect(ui->emDelegateClearAllButton,      SIGNAL(clicked()),                     this, SLOT(clearAllItems()));
-    connect(ui->emDelegateClearSelectedButton, SIGNAL(clicked()),                     this, SLOT(clearSelectedItem()));
+    listWidgetConfiguration(m_pUI->emDelegateListWidget);
+    connect(m_pUI->emDelegateLineEdit,            SIGNAL(returnPressed()),               this, SLOT(addTaskItemToListWidget()));
+    connect(m_pUI->emDelegateListWidget,          SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(changeTaskStatus(QListWidgetItem*)));
+    connect(m_pUI->emDelegateClearAllButton,      SIGNAL(clicked()),                     this, SLOT(clearAllTasks()));
+    connect(m_pUI->emDelegateClearSelectedButton, SIGNAL(clicked()),                     this, SLOT(clearSelectedTask()));
 }
 
 void REisenhowerMatrixMainWindow::configurationEmEliminateGroup()
 {
-    listWidgetConfiguration(ui->emEliminateListWidget);
-    connect(ui->emEliminateLineEdit,            SIGNAL(returnPressed()),               this, SLOT(addTaskItemToListWidget()));
-    connect(ui->emEliminateListWidget,          SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(highlightAndStrokeItemChecked(QListWidgetItem*)));
-    connect(ui->emEliminateClearAllButton,      SIGNAL(clicked()),                     this, SLOT(clearAllItems()));
-    connect(ui->emEliminateClearSelectedButton, SIGNAL(clicked()),                     this, SLOT(clearSelectedItem()));
+    listWidgetConfiguration(m_pUI->emEliminateListWidget);
+    connect(m_pUI->emEliminateLineEdit,            SIGNAL(returnPressed()),               this, SLOT(addTaskItemToListWidget()));
+    connect(m_pUI->emEliminateListWidget,          SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(changeTaskStatus(QListWidgetItem*)));
+    connect(m_pUI->emEliminateClearAllButton,      SIGNAL(clicked()),                     this, SLOT(clearAllTasks()));
+    connect(m_pUI->emEliminateClearSelectedButton, SIGNAL(clicked()),                     this, SLOT(clearSelectedTask()));
 }
 
 void REisenhowerMatrixMainWindow::configurationMenuGroup()
 {
-    connect(ui->loadButton, SIGNAL(clicked()), this, SLOT(loadFromFile()));
-    connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(saveToFile()));
-}
-
-QString REisenhowerMatrixMainWindow::createXmlStr()
-{
-    QString xmlStr;
-    addXmlHeader(xmlStr);
-
-    addTaskListToXml("DoListMatrix",        *ui->emDoListWidget, xmlStr);
-    addTaskListToXml("ScheduleListMatrix",  *ui->emScheduleListWidget, xmlStr);
-    addTaskListToXml("DelegateListMatrix",  *ui->emDelegateListWidget, xmlStr);
-    addTaskListToXml("EliminateListMatrix", *ui->emEliminateListWidget, xmlStr);
-    addXmlFootage(xmlStr);
-
-    qDebug() << qPrintable(xmlStr);
-    return xmlStr;
-}
-
-void REisenhowerMatrixMainWindow::addXmlHeader(QString& rXml)
-{
-    rXml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-    rXml += "<!--R_EisenhowerMatrix Xml File-->\n";
-    rXml += "<EisenhowerMatrix>\n";
-}
-
-void REisenhowerMatrixMainWindow::addXmlFootage(QString &rXml)
-{
-    rXml += "</EisenhowerMatrix>";
-}
-
-void REisenhowerMatrixMainWindow::addTaskListToXml(QString listName, QListWidget &rQListWidget, QString &rXml)
-{
-    rXml += "    <" + listName + ">\n";
-
-    for(int i = 0; i<rQListWidget.count(); ++i)
-    {
-        QListWidgetItem *pItem = rQListWidget.item(i);
-        rXml += "        <task>" + pItem->text() + "</task>\n";
-
-        if(pItem->checkState() == Qt::Checked)
-        {
-            rXml += "        <status>Done</status>\n";
-        }
-        else
-        {
-            rXml += "        <status>Pending</status>\n";
-        }
-    }
-    rXml += "    </" + listName+ ">\n";
+    connect(m_pUI->loadButton, SIGNAL(clicked()), this, SLOT(loadFromFile()));
+    connect(m_pUI->saveButton, SIGNAL(clicked()), this, SLOT(saveToFile()));
 }
 
 void REisenhowerMatrixMainWindow::updateTotalTaskCounter(QLabel *pQLablel, int totalTasks)
@@ -326,6 +296,7 @@ QListWidgetItem * REisenhowerMatrixMainWindow::createListWidgetItem(QListWidget 
     {
         return nullptr;
     }
+
     QListWidgetItem* pQListWidgetItem = new QListWidgetItem(pQListParent);
     pQListWidgetItem->setFlags(pQListWidgetItem->flags() | Qt::ItemIsUserCheckable);
     pQListWidgetItem->setCheckState(Qt::Unchecked);

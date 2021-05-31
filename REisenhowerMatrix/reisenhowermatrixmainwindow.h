@@ -22,10 +22,10 @@ public:
     ~REisenhowerMatrixMainWindow();
 
 public slots:
-    void highlightAndStrokeItemChecked(QListWidgetItem *pListWidgetItem);
+    void changeTaskStatus(QListWidgetItem *pListWidgetItem);
     void addTaskItemToListWidget();
-    void clearAllItems();
-    void clearSelectedItem();
+    void clearAllTasks();
+    void clearSelectedTask();
     void loadFromFile();
     void saveToFile();
 
@@ -35,21 +35,12 @@ private:
     void configurationEmDelegateGroup();
     void configurationEmEliminateGroup();
     void configurationMenuGroup();
-
-    QString createXmlStr();
-    void addXmlHeader(QString& rXml);
-    void addXmlFootage(QString& rXml);
-    void addTaskListToXml(QString listName, QListWidget &rQListWidget, QString &rXml);
-
-
     void updateTotalTaskCounter(QLabel *pQLablel, int totalTasks);
-
     void listWidgetConfiguration(QListWidget *pQListWidget);
     QListWidgetItem * createListWidgetItem(QListWidget *pQListParent, const QString &rText);
-    Ui::REisenhowerMatrixMainWindow *ui;
 
+    Ui::REisenhowerMatrixMainWindow *m_pUI;
     const QString m_lineEditDefaultName = "Add Task";
 
-    QString m_xmlFilePath;
 };
 #endif // REISENHOWERMATRIXMAINWINDOW_H

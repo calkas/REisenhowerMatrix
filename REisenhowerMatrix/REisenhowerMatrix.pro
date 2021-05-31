@@ -18,10 +18,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     reisenhowermatrixmainwindow.cpp \
+    tasktoxmlbuilder.cpp \
     xmlematrixreader.cpp
 
 HEADERS += \
     reisenhowermatrixmainwindow.h \
+    tasktoxmlbuilder.h \
     xmlematrixreader.h
 
 FORMS += \
