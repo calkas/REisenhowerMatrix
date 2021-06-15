@@ -41,6 +41,7 @@ private:
 
     Ui::REisenhowerMatrixMainWindow *m_pUI;
     const QString m_lineEditDefaultName = "Add Task";
+    bool m_wasModificationMade;
 
 };
 #endif // REISENHOWERMATRIXMAINWINDOW_H

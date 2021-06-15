@@ -17,6 +17,7 @@
 REisenhowerMatrixMainWindow::REisenhowerMatrixMainWindow(QWidget *parent)
     : QMainWindow(parent)
     , m_pUI(new Ui::REisenhowerMatrixMainWindow)
+    , m_wasModificationMade(false)
 {
     m_pUI->setupUi(this);
     configurationEmDoGroup();
@@ -42,12 +43,14 @@ void REisenhowerMatrixMainWindow::changeTaskStatus(QListWidgetItem *pListWidgetI
     if(pListWidgetItem->checkState() == Qt::Checked)
     {
         isFontStrikeOut = true;
-        itemBackGroundColor = QColor("#ffffb2");
+        itemBackGroundColor = QColor("#5bdbf5");
+        //itemBackGroundColor = QColor("#ffffb2");
     }
 
     itemFont.setStrikeOut(isFontStrikeOut);
     pListWidgetItem->setFont(itemFont);
     pListWidgetItem->setBackgroundColor(itemBackGroundColor);
+    m_wasModificationMade = true;
 }
 
 void REisenhowerMatrixMainWindow::addTaskItemToListWidget()
@@ -74,7 +77,6 @@ void REisenhowerMatrixMainWindow::addTaskItemToListWidget()
     {
         m_pUI->emDelegateListWidget->addItem(createListWidgetItem(m_pUI->emDelegateListWidget, itemName));
         updateTotalTaskCounter(m_pUI->emDelegateTotalTasksLabel, m_pUI->emDelegateListWidget->model()->rowCount());
-
     }
     else if(pQLineEdit == m_pUI->emScheduleLineEdit)
     {
@@ -93,6 +95,7 @@ void REisenhowerMatrixMainWindow::addTaskItemToListWidget()
 
     pQLineEdit->clear();
     pQLineEdit->setPlaceholderText(m_lineEditDefaultName);
+    m_wasModificationMade = true;
 }
 
 void REisenhowerMatrixMainWindow::clearAllTasks()
@@ -122,6 +125,8 @@ void REisenhowerMatrixMainWindow::clearAllTasks()
     {
         //Nothing
     }
+
+    m_wasModificationMade = true;
 }
 
 void REisenhowerMatrixMainWindow::clearSelectedTask()
@@ -153,10 +158,23 @@ void REisenhowerMatrixMainWindow::clearSelectedTask()
     {
         //Nothing
     }
+
+    m_wasModificationMade = true;
 }
 
 void REisenhowerMatrixMainWindow::loadFromFile()
 {
+    if(m_wasModificationMade)
+    {
+        QMessageBox::StandardButton reply;
+          reply = QMessageBox::warning(this, "Warning", "\nDo you want to save the document before load?\n\n",
+                                        QMessageBox::Save |QMessageBox::Discard);
+          if (reply == QMessageBox::Save)
+          {
+              saveToFile();
+          }
+    }
+
     QString xmlFilePath = QFileDialog::getOpenFileName(this,
                                                        tr("Open xml File"),
                                                        "c:/",
@@ -195,6 +213,8 @@ void REisenhowerMatrixMainWindow::loadFromFile()
     updateTotalTaskCounter(m_pUI->emScheduleTotalTasksLabel,  m_pUI->emScheduleListWidget->model()->rowCount());
     updateTotalTaskCounter(m_pUI->emEliminateTotalTasksLabel, m_pUI->emEliminateListWidget->model()->rowCount());
     xmlFile.close();
+
+    m_wasModificationMade = false;
 }
 
 void REisenhowerMatrixMainWindow::saveToFile()
@@ -232,6 +252,7 @@ void REisenhowerMatrixMainWindow::saveToFile()
     m_pUI->statusbar->showMessage("File: " + savefileNamePath + " - Saved");
 
     file.close();
+    m_wasModificationMade = false;
 }
 
 void REisenhowerMatrixMainWindow::configurationEmDoGroup()

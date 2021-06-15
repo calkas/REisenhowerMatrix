@@ -94,6 +94,9 @@
        <height>251</height>
       </rect>
      </property>
+     <property name="cursor" stdset="0">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
     </widget>
     <widget class="QLineEdit" name="emDoLineEdit">
      <property name="geometry">
@@ -172,6 +175,9 @@
        <width>351</width>
        <height>251</height>
       </rect>
+     </property>
+     <property name="cursor" stdset="0">
+      <cursorShape>PointingHandCursor</cursorShape>
      </property>
     </widget>
     <widget class="QLineEdit" name="emDelegateLineEdit">
@@ -252,6 +258,9 @@
        <height>251</height>
       </rect>
      </property>
+     <property name="cursor" stdset="0">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
     </widget>
     <widget class="QLineEdit" name="emScheduleLineEdit">
      <property name="geometry">
@@ -331,6 +340,9 @@
        <height>251</height>
       </rect>
      </property>
+     <property name="cursor" stdset="0">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
     </widget>
     <widget class="QLineEdit" name="emEliminateLineEdit">
      <property name="geometry">
@@ -396,7 +408,7 @@
      <x>0</x>
      <y>0</y>
      <width>956</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
