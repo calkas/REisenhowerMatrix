@@ -28,6 +28,7 @@ public slots:
     void clearSelectedTask();
     void loadFromFile();
     void saveToFile();
+    void infoLog();
 
 private:
     void configurationEmDoGroup();

@@ -3,5 +3,6 @@
         <file>Resources/openFile.png</file>
         <file>Resources/saveIcon.png</file>
         <file>Resources/removeIcon.png</file>
+        <file>Resources/info.png</file>
     </qresource>
 </RCC>

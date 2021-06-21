@@ -42,7 +42,7 @@ TaskToXmlBuilder &TaskToXmlBuilder::addTaskListToXml(QString listName, QListWidg
     return *this;
 }
 
-QString TaskToXmlBuilder::buildXml() const
+QString& TaskToXmlBuilder::buildXml()
 {
     return m_Xml;
 }

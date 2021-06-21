@@ -11,7 +11,7 @@ public:
     TaskToXmlBuilder& addXmlHeader();
     TaskToXmlBuilder& addXmlFootage();
     TaskToXmlBuilder& addTaskListToXml(QString listName, QListWidget &rQListWidget);
-    QString buildXml() const;
+    QString &buildXml();
 
 private:
     QString m_Xml;

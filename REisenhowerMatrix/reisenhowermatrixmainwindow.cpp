@@ -4,7 +4,6 @@
 #include <QListWidgetItem>
 #include <QLineEdit>
 #include <QLabel>
-#include <QDebug>
 #include <QFont>
 #include <QColor>
 #include <QFileDialog>
@@ -44,7 +43,6 @@ void REisenhowerMatrixMainWindow::changeTaskStatus(QListWidgetItem *pListWidgetI
     {
         isFontStrikeOut = true;
         itemBackGroundColor = QColor("#5bdbf5");
-        //itemBackGroundColor = QColor("#ffffb2");
     }
 
     itemFont.setStrikeOut(isFontStrikeOut);
@@ -166,13 +164,14 @@ void REisenhowerMatrixMainWindow::loadFromFile()
 {
     if(m_wasModificationMade)
     {
+
         QMessageBox::StandardButton reply;
-          reply = QMessageBox::warning(this, "Warning", "\nDo you want to save the document before load?\n\n",
+        reply = QMessageBox::warning(this, "Warning", "\nDo you want to save the document before load?\n\n",
                                         QMessageBox::Save |QMessageBox::Discard);
-          if (reply == QMessageBox::Save)
-          {
-              saveToFile();
-          }
+        if (reply == QMessageBox::Save)
+        {
+            saveToFile();
+        }
     }
 
     QString xmlFilePath = QFileDialog::getOpenFileName(this,
@@ -255,6 +254,11 @@ void REisenhowerMatrixMainWindow::saveToFile()
     m_wasModificationMade = false;
 }
 
+void REisenhowerMatrixMainWindow::infoLog()
+{
+    QMessageBox::information(this, "Info", "The Eisenhower Matrix, also referred to as Urgent-Important Matrix, helps you decide on and prioritize tasks by urgency and importance, sorting out less urgent and important tasks which you should either delegate or not do at all.\n", QMessageBox::Ok );
+}
+
 void REisenhowerMatrixMainWindow::configurationEmDoGroup()
 {
     listWidgetConfiguration(m_pUI->emDoListWidget);
@@ -295,6 +299,7 @@ void REisenhowerMatrixMainWindow::configurationMenuGroup()
 {
     connect(m_pUI->loadButton, SIGNAL(clicked()), this, SLOT(loadFromFile()));
     connect(m_pUI->saveButton, SIGNAL(clicked()), this, SLOT(saveToFile()));
+    connect(m_pUI->infoButton, SIGNAL(clicked()), this, SLOT(infoLog()));
 }
 
 void REisenhowerMatrixMainWindow::updateTotalTaskCounter(QLabel *pQLablel, int totalTasks)
@@ -324,4 +329,3 @@ QListWidgetItem * REisenhowerMatrixMainWindow::createListWidgetItem(QListWidget 
     pQListWidgetItem->setText(rText);
     return pQListWidgetItem;
 }
-

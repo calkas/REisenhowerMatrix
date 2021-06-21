@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>956</width>
-    <height>838</height>
+    <height>819</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -64,6 +64,29 @@
      <property name="icon">
       <iconset resource="resources.qrc">
        <normaloff>:/eMatrix/Resources/openFile.png</normaloff>:/eMatrix/Resources/openFile.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>25</width>
+       <height>25</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="infoButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>680</y>
+       <width>151</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Info</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/eMatrix/Resources/info.png</normaloff>:/eMatrix/Resources/info.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -322,9 +345,9 @@
    <widget class="QGroupBox" name="emEliminateGroupBox">
     <property name="geometry">
      <rect>
-      <x>580</x>
+      <x>570</x>
       <y>400</y>
-      <width>361</width>
+      <width>371</width>
       <height>371</height>
      </rect>
     </property>

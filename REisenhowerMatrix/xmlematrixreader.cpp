@@ -1,5 +1,4 @@
 #include "xmlematrixreader.h"
-#include <QDebug>
 #include <QListWidget>
 #include <QListWidgetItem>
 
@@ -17,31 +16,14 @@ void XmlEMatrixReader::Read()
     while (m_XmlReader.readNextStartElement() && !m_XmlReader.atEnd())
     {
         if(m_XmlReader.name() == "DoListMatrix")
-        {
-            //qDebug() << "Parsing DoListMatrix";
             readTaskLists(m_DoList);
-        }
         else if(m_XmlReader.name() == "ScheduleListMatrix")
-        {
-            //qDebug() << "Parsing ScheduleListMatrix";
             readTaskLists(m_ScheduleList);
-        }
-
         else if(m_XmlReader.name() == "DelegateListMatrix")
-        {
-            //qDebug() << "Parsing DelegateListMatrix";
             readTaskLists(m_DelegateList);
-        }
-
         else if(m_XmlReader.name() == "EliminateListMatrix")
-        {
-            //qDebug() << "Parsing EliminateListMatrix";
             readTaskLists(m_EliminateList);
-        }
-
     }
-
-    return;
 }
 
 bool XmlEMatrixReader::FillList(QListWidget &rList, QString listName)
@@ -106,9 +88,6 @@ void XmlEMatrixReader::readTaskLists(QVector<QPair<QString, QString>> &rList)
                     QString taskStatus = m_XmlReader.readElementText();
                     QPair<QString, QString> pairObj(taskName, taskStatus);
                     rList.push_back(pairObj);
-
-                    //qDebug() << taskName;
-                    //qDebug() << taskStatus;
                 }
                 else
                 {
