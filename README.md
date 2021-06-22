@@ -6,6 +6,6 @@ The Eisenhower Matrix, also referred to as Urgent-Important Matrix, helps you de
 
 # Program
 
-![image info](./Misc/app_working.gif)
+![image info](./Misc/app_recording.gif)
 
 
